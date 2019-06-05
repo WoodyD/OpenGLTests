@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Figures.hpp"
-
-#include <vector>
-
 #include <GLUT/GLUT.h>
 
-namespace Render {
+#include <vector>
+#include <iostream>
+
+#include "Figures.hpp"
+
+namespace GLUTRender {
     
     void Initialize();
     void Resize(int width, int height);
@@ -23,17 +24,28 @@ namespace Render {
     static float rotation_x_increment = 0.f;
     static float rotation_y_increment = 0.f;
     static float rotation_z_increment = 0.f;
-    static int filling = 0;
+    static bool filling = false;
     
-    static std::vector<Cube> allCubes;
+    static std::vector<Object> allObjects = {};
     
-    class GLUTOpenGLRenderer
+    class GLUTOpenGLRenderer final
     {
     public:
         GLUTOpenGLRenderer() = delete;
         GLUTOpenGLRenderer(int argc, char *argv[]);
         
-        void AddCubeToRender(const Cube& cube);
+        template<class ObjectType>
+        GLUTOpenGLRenderer AddObjectToRender(ObjectType& object)
+        {
+            std::cout << "Begin cast" << std::endl;
+            const Object& obj = dynamic_cast<Object&>(object);
+            std::cout << "End cast" << std::endl;
+            allObjects.emplace_back(obj);
+            std::cout << "Obj added" << std::endl;
+            
+            return *this;
+        };
+        
         void StartMainLoop();
     };
     

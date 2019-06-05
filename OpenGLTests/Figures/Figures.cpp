@@ -1,8 +1,8 @@
-
 #include "Figures.hpp"
 
-Cube::Cube(const float sideSize) {
-    cube =
+Cube::Cube(const float sideSize) : Object(ObjectType::CUBE)
+{
+    m_Object =
     {
         {
             -sideSize/2,    -sideSize/2,    sideSize/2,   // vertex v0

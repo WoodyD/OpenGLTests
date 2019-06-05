@@ -1,8 +1,9 @@
 #include "GLUTOpenGLRenderer.hpp"
 
-namespace Render {
-    
-    GLUTOpenGLRenderer::GLUTOpenGLRenderer(int argc, char *argv[]) {
+namespace GLUTRender
+{
+    GLUTOpenGLRenderer::GLUTOpenGLRenderer(int argc, char *argv[])
+    {
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
         glutInitWindowSize(screen_width,screen_height);
@@ -18,11 +19,8 @@ namespace Render {
         Initialize();
     }
     
-    void GLUTOpenGLRenderer::AddCubeToRender(const Cube& cube) {
-        allCubes.push_back(cube);
-    }
-    
-    void GLUTOpenGLRenderer::StartMainLoop() {
+    void GLUTOpenGLRenderer::StartMainLoop()
+    {
         glutMainLoop();
     }
     
@@ -77,18 +75,26 @@ namespace Render {
     
     void RenderFigures()
     {
-        for(auto& cube : allCubes)
+        //std::cout << "Render objects count: " << allObjects.size() << std::endl;
+        for(auto& object : allObjects)
         {
             int l_index;
-            FigureBase::obj_type cur_cube = cube.GetCube();
-            for (l_index = 0; l_index < 12; l_index++)
+            int trianglesCount = 0;
+            const ObjectBase::obj_type& cur_obj = object.GetObject();
+            
+            if(object.GetType() == ObjectType::CUBE)
+            {
+                trianglesCount = 12;
+            }
+            
+            for (l_index = 0; l_index < trianglesCount; l_index++)
             {
                 glColor3f(1.0, 0.0, 0.0);
-                glVertex3f(cur_cube.vertex[cur_cube.polygon[l_index].a].x, cur_cube.vertex[cur_cube.polygon[l_index].a].y, cur_cube.vertex[cur_cube.polygon[l_index].a].z);
+                glVertex3f(cur_obj.vertex[cur_obj.polygon[l_index].a].x, cur_obj.vertex[cur_obj.polygon[l_index].a].y, cur_obj.vertex[cur_obj.polygon[l_index].a].z);
                 glColor3f(0.0, 1.0, 0.0);
-                glVertex3f(cur_cube.vertex[cur_cube.polygon[l_index].b].x, cur_cube.vertex[cur_cube.polygon[l_index].b].y, cur_cube.vertex[cur_cube.polygon[l_index].b].z);
+                glVertex3f(cur_obj.vertex[cur_obj.polygon[l_index].b].x, cur_obj.vertex[cur_obj.polygon[l_index].b].y, cur_obj.vertex[cur_obj.polygon[l_index].b].z);
                 glColor3f(0.0,0.0,1.0);
-                glVertex3f(cur_cube.vertex[cur_cube.polygon[l_index].c].x, cur_cube.vertex[cur_cube.polygon[l_index].c].y, cur_cube.vertex[cur_cube.polygon[l_index].c].z);
+                glVertex3f(cur_obj.vertex[cur_obj.polygon[l_index].c].x, cur_obj.vertex[cur_obj.polygon[l_index].c].y, cur_obj.vertex[cur_obj.polygon[l_index].c].z);
             }
         }
     }
@@ -103,10 +109,10 @@ namespace Render {
                 rotation_z_increment=0;
                 break;
             case 'r': case 'R':
-                if (filling == 0)
+                if (!filling)
                 {
                     glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-                    filling = 1;
+                    filling = true;
                 }
                 else
                 {
