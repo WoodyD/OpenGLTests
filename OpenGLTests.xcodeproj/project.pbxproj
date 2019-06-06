@@ -99,8 +99,7 @@
 		EF130F7322A6E47A00BD0CEF /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
-				EF130F7522A6E4C700BD0CEF /* GLUTOpenGLRenderer.hpp */,
-				EF130F7422A6E4C700BD0CEF /* GLUTOpenGLRenderer.cpp */,
+				EF1C248522A99CB200257603 /* GLUT */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -112,6 +111,15 @@
 				EF130F7F22A80B8A00BD0CEF /* Figures.cpp */,
 			);
 			path = Figures;
+			sourceTree = "<group>";
+		};
+		EF1C248522A99CB200257603 /* GLUT */ = {
+			isa = PBXGroup;
+			children = (
+				EF130F7522A6E4C700BD0CEF /* GLUTOpenGLRenderer.hpp */,
+				EF130F7422A6E4C700BD0CEF /* GLUTOpenGLRenderer.cpp */,
+			);
+			path = GLUT;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

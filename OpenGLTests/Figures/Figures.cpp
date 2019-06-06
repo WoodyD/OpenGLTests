@@ -1,6 +1,6 @@
 #include "Figures.hpp"
 
-Cube::Cube(const float sideSize) : Object(ObjectType::CUBE)
+Cube::Cube(const float sideSize) : GraphicObject(ObjectType::CUBE)
 {
     m_Object =
     {

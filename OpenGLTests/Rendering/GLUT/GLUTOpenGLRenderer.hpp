@@ -9,7 +9,6 @@
 
 namespace GLUTRender {
     
-    void Initialize();
     void Resize(int width, int height);
     void Display(void);
     void Keyboard (unsigned char key, int x, int y);
@@ -26,8 +25,6 @@ namespace GLUTRender {
     static float rotation_z_increment = 0.f;
     static bool filling = false;
     
-    static std::vector<Object> allObjects = {};
-    
     class GLUTOpenGLRenderer final
     {
     public:
@@ -35,18 +32,17 @@ namespace GLUTRender {
         GLUTOpenGLRenderer(int argc, char *argv[]);
         
         template<class ObjectType>
-        GLUTOpenGLRenderer AddObjectToRender(ObjectType& object)
+        void AddObjectToRender(ObjectType& object)
         {
-            std::cout << "Begin cast" << std::endl;
-            const Object& obj = dynamic_cast<Object&>(object);
-            std::cout << "End cast" << std::endl;
+            const GraphicObject& obj = dynamic_cast<GraphicObject&>(object);
             allObjects.emplace_back(obj);
-            std::cout << "Obj added" << std::endl;
-            
-            return *this;
         };
         
         void StartMainLoop();
+        
+        void Initialize();
+        
+        static std::vector<GraphicObject> allObjects;
     };
     
 }

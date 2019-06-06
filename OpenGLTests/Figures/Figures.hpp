@@ -4,18 +4,20 @@
 #define MAX_VERTICES 2000 // Max number of vertices (for each object)
 #define MAX_POLYGONS 2000 // Max number of polygons (for each object)
 
+static int s_IDIndex = 0;
+
 enum class ObjectType
 {
     NONE,
     CUBE
 };
 
-struct ObjectBase
+struct GraphicObjectBase
 {
 protected:
-    virtual ~ObjectBase()
+    virtual ~GraphicObjectBase()
     {
-        std::cout << "Graphic object desroyed" << std::endl;
+        std::cout << "Object base desroyed" << std::endl;
     };
 
 public:
@@ -36,14 +38,14 @@ public:
     {
         vertex_type vertex[MAX_VERTICES];
         polygon_type polygon[MAX_POLYGONS];
-    } obj_type, *obj_type_ptr;
+    } graphic_object, *obj_type_ptr;
  
 };
 
-class Object : ObjectBase
+class GraphicObject : GraphicObjectBase
 {
 public:
-    obj_type GetObject() const
+    graphic_object GetObject() const
     {
         return m_Object;
     };
@@ -53,19 +55,32 @@ public:
         return m_Type;
     };
     
+    int GetUniqueID() const
+    {
+        return m_UniqueID;
+    };
+    
+    virtual ~GraphicObject()
+    {
+        std::cout << "Object desroyed. ID: " << m_UniqueID << std::endl;
+    };
 protected:
-    Object(const ObjectType typeName) : m_Type(typeName) {};
+    GraphicObject(const ObjectType typeName) : m_Type(typeName)
+    {
+        m_UniqueID = s_IDIndex;
+        s_IDIndex++;
+    };
     
 protected:
-    obj_type m_Object;
+    graphic_object m_Object;
     
 private:
     ObjectType m_Type = ObjectType::NONE;
+    int m_UniqueID = 0;
 };
 
-class Cube final : public Object
+class Cube final : public GraphicObject
 {
 public:
     Cube(const float sideSize);
-    
 };

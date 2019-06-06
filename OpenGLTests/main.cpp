@@ -7,10 +7,10 @@
 int main(int argc, char *argv[])
 {
     GLUTRender::GLUTOpenGLRenderer renderer (argc, argv);
-    Cube cube1 (10.f);
-    Cube cube2 (3.f);
+    Cube cube1 (20.f);
+    Cube cube2 (10.f);
     
-    renderer.AddObjectToRender(cube1).AddObjectToRender(cube2);
+    renderer.AddObjectToRender(cube1);
     
     renderer.StartMainLoop();
     

@@ -2,6 +2,9 @@
 
 namespace GLUTRender
 {
+    
+    std::vector<GraphicObject> GLUTOpenGLRenderer::allObjects;
+    
     GLUTOpenGLRenderer::GLUTOpenGLRenderer(int argc, char *argv[])
     {
         glutInit(&argc, argv);
@@ -24,7 +27,7 @@ namespace GLUTRender
         glutMainLoop();
     }
     
-    void Initialize()
+    void GLUTOpenGLRenderer::Initialize()
     {
         glClearColor(0.0, 0.0, 0.2, 0.0);
         glShadeModel(GL_SMOOTH);
@@ -75,12 +78,11 @@ namespace GLUTRender
     
     void RenderFigures()
     {
-        //std::cout << "Render objects count: " << allObjects.size() << std::endl;
-        for(auto& object : allObjects)
+        for(auto& object : GLUTOpenGLRenderer::allObjects)
         {
             int l_index;
             int trianglesCount = 0;
-            const ObjectBase::obj_type& cur_obj = object.GetObject();
+            const GraphicObjectBase::graphic_object& cur_obj = object.GetObject();
             
             if(object.GetType() == ObjectType::CUBE)
             {
@@ -128,16 +130,16 @@ namespace GLUTRender
         switch (key)
         {
             case GLUT_KEY_UP:
-                rotation_x_increment = rotation_x_increment +0.005;
+                rotation_x_increment = rotation_x_increment + 0.005;
                 break;
             case GLUT_KEY_DOWN:
-                rotation_x_increment = rotation_x_increment -0.005;
+                rotation_x_increment = rotation_x_increment - 0.005;
                 break;
             case GLUT_KEY_LEFT:
-                rotation_y_increment = rotation_y_increment +0.005;
+                rotation_y_increment = rotation_y_increment + 0.005;
                 break;
             case GLUT_KEY_RIGHT:
-                rotation_y_increment = rotation_y_increment -0.005;
+                rotation_y_increment = rotation_y_increment - 0.005;
                 break;
         }
     }
